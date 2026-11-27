@@ -17,7 +17,7 @@ condition-specific cumulative-incidence estimates, accounting for competing deat
 
 </div>
 
-> **Status:** the paper is under review. This repository shares the full analysis code: the CRESCENT model, all comparator models, the evaluation, ablation and explanation analyses, and the figure-plotting code. No UK Biobank data or fitted model weights are shared.
+> **Status:** the paper is under review. This repository shares the full analysis code: the CRESCENT model, all comparator models, the evaluation and explanation analyses, and the figure-plotting code. No UK Biobank data or fitted model weights are shared.
 
 <p align="center">
   <img src="figures/figure1/crescent_overview_animated.svg" alt="CRESCENT overview: a health record is encoded, read separately for each condition, combined into additive log-hazards, and converted into a competing-risk profile" width="100%">
@@ -35,7 +35,7 @@ We primarily evaluated **two- and five-year risks** (months 6–30 and 6–66 af
 
 ## Key findings
 
-- CRESCENT reached a macro AUROC of **0.78** at two and five years and a five-year competing-risk concordance of **0.78**, tied with the locally pretrained CRESCENT-PT among nine models.
+- CRESCENT reached a macro AUROC of **0.78** at two and five years and a five-year competing-risk concordance of **0.77**, tied with the locally pretrained CRESCENT-PT among nine models.
 - At five years, CRESCENT and penalised Cox were within 0.01 AUROC for the ten most common conditions; several rarer conditions favoured CRESCENT.
 - Diagnosis history accounted for the largest share of the model's predictions (**56%** of Shapley attribution), followed by age (19%) and BMI (10%).
 - Removing event history from the disease rates lowered five-year macro AUROC by **0.131** in the ablation study.
@@ -46,7 +46,6 @@ We primarily evaluated **two- and five-year risks** (months 6–30 and 6–66 af
 crescent/            CRESCENT model and training (paper §2.4–2.5)
 evaluation/          Test metrics and bootstrap confidence intervals (§2.7, Figs. 2–3)
 comparators/         The eight comparator models (§2.6, Fig. 2)
-ablations/           Architecture ablations (§2.10, Table 2)
 explainability/      Shapley, accumulated local effects and diagnosis-removal analyses (§2.9, Figs. 4–5)
 supplementary/       Hyperparameter screen, history sensitivity and scaling (§2.8, Figs. S2–S4)
 data_preparation/    Builds the prepared splits from UK Biobank records (§2.1–2.3)
