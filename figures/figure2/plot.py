@@ -139,6 +139,13 @@ CANONICAL_SPLIT_SAMPLE_FILES = {
     "validation": COHORT_RUN_DIR / "canonical_val_samples.pkl",
     "test": COHORT_RUN_DIR / "canonical_test_samples.pkl",
 }
+# Integration window for Figure 2 panels D-E, in months after the six-month entry.
+# (0, 60) covers recruitment months 6-66. It must match integration_start_months /
+# integration_end_months in the macro-CI and integrated-metric tables.
+ENTRY_DELAY_MONTHS = 6
+INTEGRATION_WINDOW_AFTER_ENTRY = (0, 60)
+INTEGRATION_WINDOW_RECRUITMENT = tuple(m + ENTRY_DELAY_MONTHS for m in INTEGRATION_WINDOW_AFTER_ENTRY)
+
 
 # Insertion order is the Figure 1 panel order. `direction` is +1 when larger
 # values are better and -1 when smaller values are better.
@@ -180,7 +187,7 @@ FIG1_PANEL_SPECS = {
         "source": "integrated",
         "column": "scaled_ibs_ipcw_ht",
         "macro_metric": "scaled_ibs_ipcw_ht",
-        "macro_integration_months": (12, 120),
+        "macro_integration_months": INTEGRATION_WINDOW_AFTER_ENTRY,
         "direction": 1,
         "format": ".2f",
         "reference_line": 0.0,
@@ -190,7 +197,7 @@ FIG1_PANEL_SPECS = {
         "source": "integrated",
         "column": "integrated_abs_calibration_error",
         "macro_metric": "integrated_abs_calibration_error",
-        "macro_integration_months": (12, 120),
+        "macro_integration_months": INTEGRATION_WINDOW_AFTER_ENTRY,
         "direction": -1,
         "format": ".3f",
         "reference_line": 0.0,
@@ -1717,9 +1724,9 @@ PANEL_DISPLAY = {
 PANEL_TITLES = {
     "2-year AUROC": "2-year AUROC ↑",
     "5-year AUROC": "5-year AUROC ↑",
-    "Scaled integrated Brier": "Scaled IBS skill score ↑\n(%, 6–126 mo)",
+    "Scaled integrated Brier": f"Scaled IBS skill score ↑\n(%, {INTEGRATION_WINDOW_RECRUITMENT[0]}–{INTEGRATION_WINDOW_RECRUITMENT[1]} mo)",
     "Integrated calibration error": (
-        "Integrated calibration error ↓\n($\\times10^{-3}$, 6–126 mo)"
+        f"Integrated calibration error ↓\n($\\times10^{{-3}}$, {INTEGRATION_WINDOW_RECRUITMENT[0]}–{INTEGRATION_WINDOW_RECRUITMENT[1]} mo)"
     ),
 }
 for _p, _s in FIG1_PANEL_SPECS.items():
